@@ -14,6 +14,8 @@ CREATE TABLE "Client" (
 -- CreateTable
 CREATE TABLE "Appointment" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "startTime" DATETIME NOT NULL,
+    "endTime" DATETIME NOT NULL,
     "clientId" INTEGER NOT NULL,
     "staffId" INTEGER NOT NULL,
     CONSTRAINT "Appointment_staffId_fkey" FOREIGN KEY ("staffId") REFERENCES "Staff" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,

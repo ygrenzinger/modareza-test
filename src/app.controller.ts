@@ -1,11 +1,10 @@
 import { Controller, Get, Post, Delete, Body, Param } from '@nestjs/common';
-import { AppRepository } from './app.repository';
+import { AppService } from './app.service';
 import { Appointment, Client, Staff } from '@prisma/client';
-import { parseISO } from 'date-fns';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appRepository: AppRepository) {}
+  constructor(private readonly appRepository: AppService) {}
 
   @Post('staffs')
   async createStaff(
@@ -60,8 +59,13 @@ export class AppController {
           id: appointmentData.clientId,
         },
       },
-      startTime: parseISO(appointmentData.startTime),
-      endTime: parseISO(appointmentData.endTime),
+      startTime: new Date(appointmentData.startTime),
+      endTime: new Date(appointmentData.endTime),
     });
+  }
+
+  @Get('appointments')
+  async findAllAppointments(): Promise<Appointment[]> {
+    return this.appRepository.findAllAppointments();
   }
 }
